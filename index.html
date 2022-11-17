@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Blackjack</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+
+        class ShoppingList extends React.Component {
+            render() {
+                return (
+                    <div className="shopping-list">
+                        <h1>Shopping List for {this.props.name}</h1>
+                        <ul>
+                            <li>Instagram</li>
+                            <li>WhatsApp</li>
+                            <li>Oculus</li>
+                        </ul>
+                    </div>
+                );
+            }
+        }
+
+        function App() {
+            return (
+                <div>
+                    <ShoppingList name="lole" />
+                </div>
+            )
+        }
+
+
+        // Use the ReactDOM.render to show your component on the browser
+        const root = ReactDOM.createRoot(document.getElementById("root"));
+        root.render(<App />);
+    </script>
+
+</body>
+
+</html>

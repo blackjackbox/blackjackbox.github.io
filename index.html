@@ -19,7 +19,7 @@
         function Main(props) {
             const EMPREGADO = true;
             const EMPREGADOR = false;
-            const [userState, setState] = useState(EMPREGADO);
+            const [userState, setState] = React.useState(EMPREGADO);
 
             const switchState = () => {
                 setState(!userState);

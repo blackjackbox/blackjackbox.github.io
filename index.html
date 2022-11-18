@@ -47,11 +47,11 @@
             return (
                 <div className="header">
                     <div id="header-left">
-                        <span className="header-content">Blackjack empregos</span>
+                        <span className="header-content">Blackjack Empregos</span>
                     </div>
                     <div id="header-right">
                         <span className="header-content">Você está {props.state ? "procurando por emprego" : "contratando trabalhadores"}.
-                            <p className="btn btn-link" onClick={() => { props.switchState() }}>Clique aqui para mudar.</p></span>
+                            <span className="btn btn-link" onClick={() => { props.switchState() }}>Clique aqui para mudar.</span></span>
                     </div>
                 </div>
             )

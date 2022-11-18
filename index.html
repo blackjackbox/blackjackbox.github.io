@@ -28,20 +28,56 @@
             return (
                 <div className="main-container">
                     <Header state={userState} switchState={switchState} />
-                    {userState ? <Empregado /> : <Empregador />}
+                    {userState ? <Empregado state={userState} /> : <Empregador state={userState} />}
                     <Footer />
                 </div>
             );
         };
 
         function Empregado(props) {
-
+            return (
+                <div className="body-container">
+                    <div className="jobs-container">
+                        <Top />
+                        <Jobs />
+                    </div>
+                    <RightPanel />
+                </div>
+            )
         };
 
         function Empregador(props) {
-
+            return (
+                <div className="body-container">
+                    <div className="jobs-container">
+                        <Top />
+                        <Jobs />
+                    </div>
+                    <RightPanel />
+                </div>
+            )
         };
 
+        function RightPanel(props) {
+            return (
+                <div className="rightPanel">
+                </div>
+            );
+        };
+
+        function Jobs() {
+            return (
+                <div className="jobs-container">
+                </div>
+            )
+        };
+
+        function Top() {
+            return (
+                <div className="top-container">
+                </div>
+            )
+        };
 
         function Header(props) {
             return (
@@ -70,25 +106,13 @@
             )
         };
 
-        function RightPanel() {
-
-        };
-
-        function Jobs() {
-
-        };
-
-        function Top() {
-
-        };
-
         function App() {
             return (
                 <div>
                     <Main />
                 </div>
             )
-        }
+        };
 
 
         const root = ReactDOM.createRoot(document.getElementById("root"));

@@ -91,3 +91,12 @@ body {
     height: 100%;
     align-items: center;
 }
+
+.rightPanel {
+    display: flex;
+    flex-direction: column;
+    width: 340px;
+    background: rgb(140, 140, 158);
+    border-left: solid black 1px;
+    border-right: solid black 1px;
+}

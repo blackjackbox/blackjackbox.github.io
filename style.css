@@ -2,19 +2,20 @@ body {
     margin: 0;
     border: 0;
     padding: 0;
-    background-color: rgb(218, 218, 218);
+    background-color: rgb(182 181 187);
 }
 
 .main-container {
+    display: flex;
     height: 100vh;
     width: 100vw;
+    flex-direction: column;
 }
 
 .footer {
     font-family: Inter, Helvetica, Arial, sans-serif;
     font-size: 14px;
     display: flex;
-    position: fixed;
     justify-content: space-between;
     align-items: center;
     height: 27px;
@@ -55,7 +56,6 @@ body {
     font-family: Inter, Helvetica, Arial, sans-serif;
     font-size: 14px;
     display: flex;
-    position: fixed;
     justify-content: space-between;
     align-items: center;
     height: 27px;
@@ -92,11 +92,94 @@ body {
     align-items: center;
 }
 
-.rightPanel {
+.right-panel {
     display: flex;
     flex-direction: column;
-    width: 340px;
-    background: rgb(140, 140, 158);
-    border-left: solid black 1px;
-    border-right: solid black 1px;
+    width: 300px;
+    background: rgb(150 152 175);
+    border-left: solid #858585 1px;
+    border-right: solid #858585 1px;
+    font-size: 15px;
+    justify-content: center;
+    align-items: center;
+}
+
+.left-panel {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    background: rgb(150 152 175);
+    border-left: solid #858585 1px;
+    border-right: solid #858585 1px;
+    font-size: 15px;
+    justify-content: center;
+    align-items: center;
+}
+
+.body-container {
+    display: flex;
+    height: calc(100% - 54px);
+    width: 100%;
+    justify-content: space-evenly;
+}
+
+.jobs-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    width: -moz-available;
+    width: -webkit-fill-available;
+    width: fill-available;
+    height: -moz-available;
+    height: -webkit-fill-available;
+    height: fill-available;
+}
+
+.top-container {
+    height: 10%;
+    width: 95%;
+    background-color: #cbcbcb;
+    border: 1px solid #8f8f8f;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.jobs-container2 {
+    display: flex;
+    height: 80%;
+    width: 95%;
+    background-color: #cbcbcb;
+    border: 1px solid #8f8f8f;
+    flex-direction: column;
+    padding: 3%;
+    overflow-y: auto;
+    overflow-x: auto;
+}
+
+.job {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+
+.newjob-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.updatename-form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    align-content: center;
+}
+
+.labelnome {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
 }

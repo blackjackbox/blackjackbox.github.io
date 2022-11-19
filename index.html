@@ -15,68 +15,210 @@
     <div id="root"></div>
 
     <script type="text/babel">
-
         function Main(props) {
             const EMPREGADO = true;
             const EMPREGADOR = false;
-            const [userState, setState] = React.useState(EMPREGADO);
+            const [userState, setUserState] = React.useState(EMPREGADO);
+            const [jobs, changeJobs] = React.useState({
+                jobs: [
+                    { id: 0, nome: "Desenvolvedor de Softwares", empresa: "Hades Softwares", salario: "1 real" },
+                    { id: 1, nome: "Administrador de Banco de Dados", empresa: "Durtose Alimentos", salario: "40 reais" },
+                    { id: 2, nome: "Analista de Suporte de TI", empresa: "Super Entregas", salario: "9 reais" },
+                    { id: 3, nome: "Coordenador de Infraestrutura", empresa: "Omega Móveis", salario: "3 reais" },
+                    { id: 4, nome: "Engenheiro Técnico", empresa: "Vagalume Cibernéticos", salario: "410 reais" },
+                    { id: 5, nome: "Analista de Sistemas", empresa: "Industrias Alpaca", salario: "80 reais" },
+                    { id: 6, nome: "Gerente de Projetos", empresa: "Millennium Power", salario: "2 reais" },
+                    { id: 7, nome: "Administrador de Banco de Dados", empresa: "Alpha Fitness", salario: "12 reais" },
+                    { id: 8, nome: "Auditor", empresa: "Bytes", salario: "10 reais" },
+                    { id: 9, nome: "Engenheiro de Dados", empresa: "Everest Inc", salario: "321 reais" },
+                    { id: 10, nome: "Engenheiro Técnico", empresa: "Rubicomms", salario: "20 reais" },
+                    { id: 11, nome: "Desenvolvedor de Softwares", empresa: "Nyx Elysium", salario: "5 reais" },
+                    { id: 12, nome: "Representante Técnico de Vendas", empresa: "Grupo Tsunami", salario: "2 reais" },
+                    { id: 13, nome: "Web Designer", empresa: "Cobra Sistemas", salario: "5 reais" },
+                    { id: 14, nome: "Analista de Sistemas", empresa: "Phoenix Soluções", salario: "1 real" },
+                    { id: 15, nome: "Estágio Comercial", empresa: "Corporação Lontra", salario: "203 reais" },
+                    { id: 16, nome: "Web Designer", empresa: "Sentinela Artes", salario: "1.000 reais" },
+                    { id: 17, nome: "Administrador de Banco de Dados", empresa: "Moontide LLC", salario: "4 reais" },
+                    { id: 18, nome: "Coordenador de Infraestrutura", empresa: "Noé Transportes", salario: "10 reais" },
+                    { id: 19, nome: "Analista de Suporte de TI", empresa: "Pantera & Compania", salario: "20 reais" },
+                    { id: 20, nome: "Engenheiro Técnico", empresa: "Besouro Energia", salario: "2 reais" }
+                ]
+            });
+            const [userData, changeData] = React.useState({ empregado: { nome: "John Smith" }, empregador: { nome: "Empresa Padrão" } });
 
             const switchState = () => {
-                setState(!userState);
+                setUserState(!userState);
+            };
+
+            const newJob = (job) => {
+                let job_ = job;
+                job_.id = jobs.jobs.length + 1;
+                job_.salario = `${job.salario} reais`
+                let jobs_ = jobs.jobs;
+                jobs_.push(job_);
+                changeJobs({ jobs: jobs_ });
+            };
+
+            const deleteJob = (i_job) => {
+                let jobs_ = jobs.jobs;
+                let index = jobs_.findIndex(job => (job.id == i_job.id));
+                jobs_.splice(index, 1);
+                changeJobs({ jobs: jobs_ });
+            };
+
+            const updateName = (name) => {
+                let data = userData;
+                userState ? data.empregado.nome = name : data.empregador.nome = name;
+                changeData({ ...data });
             };
 
             return (
                 <div className="main-container">
                     <Header state={userState} switchState={switchState} />
-                    {userState ? <Empregado state={userState} /> : <Empregador state={userState} />}
+                    <Body state={userState} jobs={jobs} newJob={newJob} deleteJob={deleteJob} updateName={updateName} userData={userData} />
                     <Footer />
                 </div>
             );
         };
 
-        function Empregado(props) {
-            return (
-                <div className="body-container">
-                    <div className="jobs-container">
-                        <Top />
-                        <Jobs />
-                    </div>
-                    <RightPanel />
-                </div>
-            )
-        };
+        function Body(props) {
+            let state_content = props.state ? <Jobs state={props.state} jobs={props.jobs} /> : <YourJobs state={props.state} jobs={props.jobs} deleteJob={props.deleteJob} changeContent={changeContent}/>;
+            const [containerContent, setContent] = React.useState(props.state);
+            React.useEffect(() => {
+                setContent(state_content);
+            }, [props.state]);
 
-        function Empregador(props) {
+            const changeContent = (input_content, content = props.state ? <Jobs state={props.state} jobs={props.jobs} /> : <YourJobs state={props.state} jobs={props.jobs} deleteJob={props.deleteJob} changeContent={changeContent} />) => {
+                input_content ? setContent(input_content) : setContent(content);
+            };
+
             return (
                 <div className="body-container">
                     <div className="jobs-container">
-                        <Top />
-                        <Jobs />
+                        <Top state={props.state} changeContent={changeContent} newJob={props.newJob} userData={props.userData} />
+                        {containerContent}
                     </div>
-                    <RightPanel />
+                    <RightPanel updateName={props.updateName} userData={props.userData} state={props.state} />
                 </div>
             )
         };
 
         function RightPanel(props) {
+            let name = props.userData.empregado.nome;
+            const [userName, changeName] = React.useState(name);
+            React.useEffect(() => {
+                name = props.userData.empregado.nome;
+                changeName(name);
+            }, [props.userData.empregado.nome]);
             return (
-                <div className="rightPanel">
+                <div className="right-panel">
+                    {props.state ? `Seu nome atual é ${props.userData.empregado.nome}` : `O nome da sua empresa é ${props.userData.empregador.nome}`}
+                    <UpdateName updateName={props.updateName} />
                 </div>
             );
         };
 
-        function Jobs() {
+
+        function UpdateName(props) {
+            const [name, setName] = React.useState('');
+
+            const handleSubmit = (event) => {
+                event.preventDefault();
+                props.updateName(name);
+            };
+
+            const handleChange = (event) => {
+                setName(event.target.value);
+            };
+
             return (
-                <div className="jobs-container">
+                <form onSubmit={handleSubmit} className="updatename-form">
+                    <label className="labelnome">
+                        Mudar Nome:{' '}
+                        <input name="nome" type="text" value={name} onChange={handleChange} className="form-control" />
+                    </label><br />
+                    <input type="submit" value="Submit" className="btn btn-primary" />
+                </form>
+            );
+        };
+
+        function Jobs(props) {
+            return (
+                <div className="jobs-container2">
+                    {props.jobs.jobs.map((job) => {
+                        return (
+                            <div key={job.id} className="job">
+                                <span>{`Nome: ${job.nome}, Empresa: ${job.empresa}, Salário mensal: ${job.salario}.`}</span>
+                                <span className="btn btn-link">Candidatar-se</span>
+                            </div>
+                        )
+                    })}
                 </div>
             )
         };
 
-        function Top() {
+        function YourJobs(props) {
+            const deleteJob = (job) => {
+                props.deleteJob(job);
+                props.changeContent();
+            };
             return (
-                <div className="top-container">
+                <div className="jobs-container2">
+                    {props.jobs.jobs.map((job) => {
+                        if (job.user) {
+                            return (
+                                <div key={job.id} className="job">
+                                    <span>{`Nome: ${job.nome}, Empresa: ${job.empresa}, Salário mensal: ${job.salario}.`}</span>
+                                    <span className="btn btn-link" onClick={() => deleteJob(job)}>Deletar</span>
+                                </div>
+                            )
+                        }
+                    })}
                 </div>
             )
+        };
+
+        function Top(props) {
+
+            return (
+                <div className="top-container">
+                    {props.state ? "Empregos Disponíveis: " : <div className="btn btn-link" onClick={() => props.changeContent(<NewJob newJob={props.newJob} changeContent={props.changeContent} userData={props.userData} />)}>Criar novo emprego</div>}
+                </div>
+            )
+        };
+
+        function NewJob(props) {
+            const [job, setJob] = React.useState({ id: null, nome: '', empresa: props.userData.empregador.nome, salario: 0, user: true });
+
+            React.useEffect(() => {
+                let job_ = job;
+                job_.empresa = props.userData.empregador.nome;
+                setJob(job_);
+            }, [props.userData.empregador.nome]);
+
+            const handleSubmit = (event) => {
+                event.preventDefault();
+                props.newJob(job);
+                props.changeContent();
+            };
+
+            const handleChange = (event) => {
+                let job_ = job;
+                job_[event.target.name] = event.target.value;
+                setJob(job_);
+            };
+
+            return (<form onSubmit={handleSubmit} className="newjob-form">
+                <label>
+                    Nome:{' '}
+                    <input name="nome" type="text" defaultValue={job.nome} onChange={handleChange} className="form-control" />
+                </label>
+                <label>
+                    Salário mensal:{' '}
+                    <input name="salario" type="number" defaultValue={job.salario} onChange={handleChange} className="form-control" />
+                </label><br />
+                <input type="submit" value="Submit" className="btn btn-primary" />
+            </form>)
         };
 
         function Header(props) {
